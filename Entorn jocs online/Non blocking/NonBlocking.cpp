@@ -11,32 +11,21 @@
 using namespace std;
 
 size_t received;
+size_t sent;
 mutex mut;
 bool endGame = false;
 sf::TcpSocket socket;
+sf::TcpSocket::Status status;
 char buffer[MAX];
 std::vector<std::string> aMensajes;
 
-
-void Recibir() {
-	while (!endGame) {
-		mut.lock(); 
-		socket.receive(buffer, MAX, received);
-		aMensajes.push_back(buffer);
-		mut.unlock();
-	}
-}
-
 int main()
 {
-
+	socket.setBlocking(false);
 	sf::IpAddress ip = sf::IpAddress::getLocalAddress();
-
-
 	char connectionType, mode;
-	
-	size_t received;
 
+	size_t received;
 	string thetext = "Coneected to: ";
 
 
@@ -45,6 +34,7 @@ int main()
 
 	if (connectionType == 's') {
 		sf::TcpListener listener;
+		listener.setBlocking(false);
 		listener.listen(2000);
 		listener.accept(socket);
 		thetext += "Server";
@@ -85,10 +75,12 @@ int main()
 	separator.setFillColor(sf::Color(200, 200, 200, 255));
 	separator.setPosition(0, 550);
 	//
-	std::thread t(&Recibir);
 
+	while (!endGame) {
+		status = socket.receive(buffer, MAX, received);
 	
-
+		aMensajes.push_back(buffer);
+	}
 	while (window.isOpen())
 	{
 
@@ -109,10 +101,10 @@ int main()
 					if (aMensajes.size() > 25)
 					{
 						aMensajes.erase(aMensajes.begin(), aMensajes.begin() + 1);
-						
+
 					}
 
-					socket.send(mensaje.c_str(), mensaje.length() + 1); //SEND
+					socket.send(mensaje.c_str(), mensaje.length() + 1,sent); //SEND
 					mensaje = ">";
 
 
@@ -122,7 +114,7 @@ int main()
 
 				if (evento.text.unicode >= 32 && evento.text.unicode <= 126) {
 					mensaje += (char)evento.text.unicode;
-					
+
 				}
 				else if (evento.text.unicode == 8 && mensaje.length() > 0)
 					mensaje.erase(mensaje.length() - 1, mensaje.length());
@@ -148,5 +140,5 @@ int main()
 		window.display();
 		window.clear();
 	}
-	t.join();
+	
 }
