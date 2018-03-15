@@ -22,6 +22,7 @@ sf::TcpSocket socket;
 sf::TcpSocket::Status status;
 char buffer[MAX];
 std::vector<std::string> aMensajes;
+
 //solo blocking
 mutex mut;
 vector<sf::TcpSocket*>aSock;
@@ -33,6 +34,8 @@ int main()
 	sf::TcpSocket sock;
 	
 	sf::Packet p;
+	PlayerInfo jugadores[3]; // per pintar ses fitxes dels altres jugadors
+	PlayerInfo yo;
 	sf::Socket::Status status = sock.connect(sf::IpAddress::getLocalAddress(), 50000, sf::seconds(15.f));
 	if (status != sf::Socket::Done) {
 		std::cout << "No se ha conectado";

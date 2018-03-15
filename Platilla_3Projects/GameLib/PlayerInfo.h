@@ -9,6 +9,7 @@ class PlayerInfo
 public:
 	sf::TcpSocket socket;
 	std::string name;
+	int turn;
 	sf::Vector2i fichas[4];
 	int dados[2];
 

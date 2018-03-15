@@ -167,21 +167,21 @@ int main()
 	//START BLUE
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			redInit.insert(pair<int, vec2>(i, vec2(585 + 34 * i, 120 + 34 * j)));
+			blueInit.insert(pair<int, vec2>(i, vec2(585 + 34 * i, 120 + 34 * j)));
 		}
 	}
 
 	//START GREEN
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			redInit.insert(pair<int, vec2>(i, vec2(120 + 34 * i, 585 + 34 * j)));
+			greenInit.insert(pair<int, vec2>(i, vec2(120 + 34 * i, 585 + 34 * j)));
 		}
 	}
 
 	//START YELLOW
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			redInit.insert(pair<int, vec2>(i, vec2(585 + 34 * i, 585 + 34 * j)));
+			yellInit.insert(pair<int, vec2>(i, vec2(585 + 34 * i, 585 + 34 * j)));
 		}
 	}
 
@@ -251,15 +251,6 @@ int main()
 	sf::Event e;
 	while (!endGame) {
 		window.clear();
-		/*sf::RectangleShape rectBlanco(sf::Vector2f(800, 800));
-		rectBlanco.setFillColor(sf::Color::White);
-		rectBlanco.setPosition(sf::Vector2f(0, 0));
-		window.draw(rectBlanco);
-
-		sf::RectangleShape central(sf::Vector2f(LADO_CASILLA * 2, LADO_CASILLA * 2));
-		central.setFillColor(sf::Color::Magenta);
-		central.setPosition(sf::Vector2f(400 - LADO_CASILLA, 400 - LADO_CASILLA));
-		window.draw(central);*/
 
 		sf::Texture image;
 		image.loadFromFile("../parxis.jpg");
